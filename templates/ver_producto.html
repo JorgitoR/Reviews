@@ -1,0 +1,291 @@
+
+<div style="width: 100%; margin-top: 30px;">
+
+	<a href="{% url 'inicio' %}">
+	<p>
+		Atras
+	</p>
+	</a>
+
+	<div style="width: 50%; margin: auto;">
+		
+	<div style="background:#fafafa; width: 30%; ">
+		
+		<img src="{{ tienda.img.url }}" style="width: 300px; height: 300px;">	
+
+		<p>
+			{{tienda.titulo}}
+		</p>
+
+		<p>
+			{{tienda.descripcion|truncatechars_html:50}}
+		</p>
+
+		<a href="{% url 'comprar'  tienda.pk  %}">
+		<button>
+			Comprar
+		</button>
+		</a>
+		
+	</div>
+
+	<form method="POST">
+		{{form.as_p}}
+
+		{% csrf_token %}
+
+		<button type="submit">
+			Enviarv reseña
+		</button>
+
+	</form>
+
+	<div style="width: 100%; ">
+
+
+
+        <button class="filtrar_review" onclick="filtro_review(event, 'Todas_reviews')" id="porDefecto">
+        	Toda las reseñas.
+        </button>
+
+
+        <button class="filtrar_review" onclick="filtro_review(event, 'Very_Bad')">
+        	 Muy Malo. {{total_1}}
+        </button>
+
+
+        <button class="filtrar_review" onclick="filtro_review(event, 'Bad')">
+        	 Malo. {{total_2}}
+        </button>
+
+
+        <button class="filtrar_review" onclick="filtro_review(event, 'regular')">
+        	 Regular. {{total_3}}
+        </button>
+
+
+        <button class="filtrar_review" onclick="filtro_review(event, 'mejor')">
+        	 Mejor. {{total_4}}
+        </button>
+
+
+        <button class="filtrar_review" onclick="filtro_review(event, 'excelente')">
+        	 Excelente. {{total_5}}
+        </button>
+
+
+
+		<div class="ocultar_reviews" id="Todas_reviews" >
+		{% for reviews in reviews  %}	
+
+			<div style="width: 80%; margin: auto; background:#ddd;" >
+
+			<p>{{reviews.comment}} </p>
+
+				{% if  reviews.anonymous %}
+
+				<p>El usuario es anonimo</p>
+
+				{% else %}
+
+				<p>{{reviews.user}}</p>
+
+				{% endif %}
+
+			</div>
+
+		{% endfor %}
+		</div>
+
+		<div class="ocultar_reviews"  id="Very_Bad">
+
+		     {% for reviews in score_1  %}	
+
+			<div style="width: 80%; margin: auto; background:#ddd;" >
+
+			<p>{{reviews.comment}} </p>
+
+				{% if  reviews.anonymous %}
+
+				<p>El usuario es anonimo</p>
+
+				{% else %}
+
+				<p>{{reviews.user}}</p>
+
+				{% endif %}
+
+			</div>
+
+		{% endfor %}
+			
+		</div>
+
+		<div class="ocultar_reviews" id="Bad">
+			
+	
+		     {% for reviews in score_2  %}	
+
+			<div style="width: 80%; margin: auto; background:#ddd;" >
+
+			<p>{{reviews.comment}} </p>
+
+				{% if  reviews.anonymous %}
+
+				<p>El usuario es anonimo</p>
+
+				{% else %}
+
+				<p>{{reviews.user}}</p>
+
+				{% endif %}
+
+			</div>
+
+		{% endfor %}
+
+		</div>
+
+		<div class="ocultar_reviews" id="regular">
+			
+			
+		     {% for reviews in score_3  %}	
+
+			<div style="width: 80%; margin: auto; background:#ddd;" >
+
+			<p>{{reviews.comment}} </p>
+
+				{% if  reviews.anonymous %}
+
+				<p>El usuario es anonimo</p>
+
+				{% else %}
+
+				<p>{{reviews.user}}</p>
+
+				{% endif %}
+
+			</div>
+
+		{% endfor %}
+
+		</div>
+
+		<div class="ocultar_reviews" id="mejor">
+			
+			
+		     {% for reviews in score_4  %}	
+
+			<div style="width: 80%; margin: auto; background:#ddd;" >
+
+			<p>{{reviews.comment}} </p>
+
+				{% if  reviews.anonymous %}
+
+				<p>El usuario es anonimo</p>
+
+				{% else %}
+
+				<p>{{reviews.user}}</p>
+
+				{% endif %}
+
+			</div>
+
+		{% endfor %}
+
+		</div>
+
+		<div class="ocultar_reviews" id="excelente">
+			
+			
+		     {% for reviews in score_5  %}	
+
+			<div style="width: 80%; margin: auto; background:#ddd;" >
+
+			<p>{{reviews.comment}} </p>
+
+				{% if  reviews.anonymous %}
+
+				<p>El usuario es anonimo</p>
+
+				{% else %}
+
+				<p>{{reviews.user}}</p>
+
+				{% endif %}
+
+			</div>
+
+		{% endfor %}
+
+		</div>
+
+
+
+	</div>
+
+	</div>
+	
+
+	
+
+</div>
+
+<script >
+	
+	function filtro_review(evt, filtroReview){
+
+  		ocultar_reviews = document.getElementsByClassName("ocultar_reviews");
+
+  		for (i = 0; i < ocultar_reviews.length; i++) {
+
+    		ocultar_reviews[i].style.display = "none";
+
+  		}
+
+  		filtrar_review = document.getElementsByClassName("filtrar_review");
+
+  		for (i = 0; i < filtrar_review.length; i++) {
+    		
+    		filtrar_review[i].className = filtrar_review[i].className.replace(" active", "");
+  		}
+
+  		document.getElementById(filtroReview).style.display = "block";
+  		evt.currentTarget.className += " active";
+
+
+}
+
+document.getElementById("porDefecto").click();
+
+
+
+
+
+
+</script>
+
+<style >
+
+	.filtrar_review{
+		
+		outline: none;
+    	padding: 7px;
+    	font-size: 15px;
+    	background: #fafafa;
+    	cursor: pointer;
+    	border: 1px solid #ddd;
+	}
+
+	.ocultar_reviews{
+		display: none;
+	}
+
+
+	button.active{
+		border-bottom: 1px solid #333;
+	}
+
+
+</style>

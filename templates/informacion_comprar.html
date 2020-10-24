@@ -1,0 +1,37 @@
+
+<div style="width: 100%; margin-top:50px; ">
+		
+<div style="width: 80%; margin: auto; background: #fafafa; display: flex; flex-wrap: wrap;">
+
+	<div style="width: 50%;">
+		<form method="POST">
+			
+				{{form.as_p}}	
+
+				{% csrf_token %}
+
+				<button type="submit">
+					Enviar
+				</button>
+
+		</form>
+	</div>
+
+	<div style="background:#fafafa; width: 30%; ">
+		
+		<img src="{{ tienda.img.url }}" style="width: 300px; height: 300px;">	
+
+		<p>
+			{{tienda.titulo}}
+		</p>
+
+		<p>
+			{{tienda.descripcion|truncatechars_html:50}}
+		</p>
+
+		
+	</div>
+
+</div>
+
+</div>
